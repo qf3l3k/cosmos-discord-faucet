@@ -148,9 +148,9 @@ async def on_message(message):
         channel = message.channel
         requester_address = str(message.content).replace("$request", "").replace(" ", "").lower()
 
-        if len(requester_address) != 42 or requester_address[:3] != BECH32_HRP:
+        if len(requester_address) != 39 or requester_address[:3] != BECH32_HRP:
             await channel.send(f'{requester.mention}, Invalid address format `{requester_address}`\n'
-                               f'Address length must be equal 42 and the suffix must be `{BECH32_HRP}`')
+                               f'Address length must be equal 39 and the suffix must be `{BECH32_HRP}`')
             return
 
         if requester.id in ACTIVE_REQUESTS:
