@@ -76,7 +76,7 @@ async def on_message(message):
 
     if message.content.startswith('$balance'):
         address = str(message.content).replace("$balance", "").replace(" ", "").lower()
-        if str(address[:3]) == BECH32_HRP and len(address) == 42:
+        if str(address[:3]) == BECH32_HRP and len(address) == 39:
             coins = await api.get_addr_balance(session, address)
             if len(coins) >= 1:
                 await message.channel.send(f'{message.author.mention}\n'
