@@ -76,7 +76,7 @@ async def on_message(message):
 
     if message.content.startswith('$balance'):
         address = str(message.content).replace("$balance", "").replace(" ", "").lower()
-        if str(address[:3]) == BECH32_HRP and len(address) == 39:
+        if str(address[:len(BECH32_HRP)]) == BECH32_HRP and len(address) == len(FAUCET_ADDRESS):
             coins = await api.get_addr_balance(session, address)
             if len(coins) >= 1:
                 await message.channel.send(f'{message.author.mention}\n'
@@ -148,9 +148,9 @@ async def on_message(message):
         channel = message.channel
         requester_address = str(message.content).replace("$request", "").replace(" ", "").lower()
 
-        if len(requester_address) != 39 or requester_address[:3] != BECH32_HRP:
+        if len(requester_address) != len(FAUCET_ADDRESS) or requester_address[:len(BECH32_HRP)] != BECH32_HRP:
             await channel.send(f'{requester.mention}, Invalid address format `{requester_address}`\n'
-                               f'Address length must be equal 39 and the suffix must be `{BECH32_HRP}`')
+                               f'Address length must be equal {len(FAUCET_ADDRESS)} and the suffix must be `{BECH32_HRP}`')
             return
 
         if requester.id in ACTIVE_REQUESTS:
